@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>高宇泽 · 展陈设计作品集</title>
+<meta name="description" content="高宇泽 — 展陈设计 / 内容策划 / 活动统筹。三个项目：校园记忆展厅、被丢弃的一天、之间。">
+<style>
+:root{
+  --ink:#151515; --gray:#9a9a9a; --mid:#6a6a6a; --line:#e4e4e4;
+  --bg:#fafafa; --gold:#b8925a;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --pad:clamp(20px,4vw,52px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:0%;
+  background:var(--ink);z-index:200;transition:width .1s linear}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:150;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px var(--pad);font-size:11px;letter-spacing:.22em;font-weight:300;
+  transition:transform .5s var(--ease),opacity .4s;
+  background:linear-gradient(to bottom,rgba(250,250,250,.94),rgba(250,250,250,0))}
+nav.hide{transform:translateY(-100%);opacity:0}
+nav .logo{font-weight:500;letter-spacing:.34em}
+nav .links{display:flex;gap:clamp(16px,3vw,44px);color:var(--gray)}
+nav .links a{transition:color .3s}
+nav .links a:hover{color:var(--ink)}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--pad);max-width:1280px;margin:0 auto;position:relative}
+.hero-inner{will-change:transform}
+.hero .name{font-weight:100;font-size:clamp(52px,11.5vw,150px);line-height:.92;letter-spacing:-.01em}
+.hero .name > span{display:block;white-space:nowrap}
+.hero .dot{display:inline-block;width:.085em;height:.085em;min-width:9px;min-height:9px;
+  border-radius:50%;background:var(--ink);margin-left:.14em;
+  vertical-align:super;transition:transform .6s var(--ease)}
+.hero .role{margin-top:clamp(28px,5vw,52px);
+  font-size:clamp(11px,1.2vw,13px);letter-spacing:.42em;color:var(--gray);
+  font-weight:300;line-height:2.4}
+.hero .scroll-hint{position:absolute;bottom:clamp(24px,5vh,52px);left:var(--pad);
+  font-size:10px;letter-spacing:.3em;color:var(--gray);
+  display:flex;align-items:center;gap:12px}
+.hero .scroll-hint i{display:block;width:36px;height:1px;background:var(--line);
+  position:relative;overflow:hidden}
+.hero .scroll-hint i::after{content:"";position:absolute;inset:0;background:var(--ink);
+  transform:translateX(-100%);animation:hint 2.4s infinite}
+@keyframes hint{0%{transform:translateX(-100%)}55%{transform:translateX(0)}100%{transform:translateX(100%)}}
+
+/* ---------- 滚动淡入 ---------- */
+.rv{opacity:1;transform:none}
+body.anim .rv{opacity:0;transform:translateY(28px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease)}
+body.anim .rv.in{opacity:1;transform:none}
+body.anim .rv.d1{transition-delay:.08s}
+body.anim .rv.d2{transition-delay:.16s}
+body.anim .rv.d3{transition-delay:.24s}
+body.anim .rv.d4{transition-delay:.32s}
+
+/* ---------- 索引 ---------- */
+.index{max-width:1280px;margin:0 auto;
+  padding:clamp(40px,8vh,100px) var(--pad) clamp(30px,6vh,70px)}
+.index .label{font-size:11px;letter-spacing:.4em;color:var(--gray);
+  font-weight:500;margin-bottom:clamp(20px,4vh,36px)}
+.index ol{list-style:none}
+.index li{border-top:1px solid var(--line)}
+.index li:last-child{border-bottom:1px solid var(--line)}
+.index li a{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  padding:clamp(18px,2.6vh,30px) 4px;font-weight:200;
+  font-size:clamp(18px,2.6vw,30px);line-height:1.3;
+  transition:padding-left .5s var(--ease)}
+.index li a:hover{padding-left:clamp(10px,2vw,24px)}
+.index li a .meta{font-size:11px;letter-spacing:.24em;color:var(--gray);
+  font-weight:300;white-space:nowrap;flex-shrink:0}
+.index li a .arrow{color:#ccc;font-size:.6em;transition:transform .5s var(--ease),color .3s}
+.index li a:hover .arrow{transform:translate(5px,-5px);color:var(--ink)}
+
+/* ---------- 章节 ---------- */
+.chapter{max-width:1280px;margin:0 auto;
+  padding:clamp(70px,13vh,160px) var(--pad) clamp(30px,6vh,70px);
+  scroll-margin-top:40px}
+.ch-head{border-top:1px solid var(--ink);padding-top:clamp(20px,3vh,34px);
+  margin-bottom:clamp(36px,7vh,80px)}
+.ch-no{font-size:11px;letter-spacing:.42em;color:var(--gold);
+  font-weight:500;margin-bottom:16px}
+.ch-head h2{font-weight:100;font-size:clamp(36px,7vw,92px);line-height:1.02;letter-spacing:-.01em}
+.ch-en{margin-top:14px;font-size:clamp(10px,1.1vw,12px);
+  letter-spacing:.36em;color:var(--gray);text-transform:uppercase;font-weight:300}
+.ch-meta{margin-top:clamp(24px,4vh,40px);display:flex;flex-wrap:wrap;
+  gap:clamp(18px,3.4vw,56px);padding-top:20px;border-top:1px solid var(--line)}
+.ch-meta dl{min-width:88px;margin:0}
+.ch-meta dt{font-size:10px;letter-spacing:.28em;color:var(--gray);
+  margin-bottom:6px;font-weight:300}
+.ch-meta dd{font-size:clamp(13px,1.3vw,15px);font-weight:400;margin:0}
+
+/* ---------- 一句话主张 ---------- */
+.lede{font-weight:200;font-size:clamp(24px,3.8vw,46px);line-height:1.45;
+  letter-spacing:.01em;max-width:16em;margin-bottom:clamp(40px,7vh,80px)}
+.lede b{font-weight:400;color:var(--gold)}
+
+/* ---------- 数据 ---------- */
+.stats{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,80px);
+  padding:clamp(26px,4vh,44px) 0;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);margin-bottom:clamp(40px,7vh,80px)}
+.stat{min-width:110px}
+.stat .v{font-weight:100;font-size:clamp(34px,5.4vw,68px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .v em{font-style:normal;font-size:.4em;font-weight:300;color:var(--gray);margin-left:.1em}
+.stat .k{font-size:10.5px;letter-spacing:.26em;color:var(--gray);
+  margin-top:10px;font-weight:300}
+
+/* ---------- 图块 ---------- */
+.block{margin-bottom:clamp(48px,9vh,110px)}
+.block-h{display:flex;align-items:baseline;gap:14px;margin-bottom:clamp(20px,3.4vh,34px)}
+.block-h .n{font-size:10px;letter-spacing:.3em;color:var(--gold);font-weight:500}
+.block-h h3{font-weight:300;font-size:clamp(17px,2vw,23px);letter-spacing:.02em}
+.block-h .line{flex:1;height:1px;background:var(--line)}
+.block p{font-size:clamp(14px,1.5vw,16px);font-weight:300;line-height:2.1;
+  color:#4a4a4a;max-width:44em}
+.block p + p{margin-top:1em}
+.block p b{font-weight:500;color:var(--ink)}
+
+.figure{position:relative;overflow:hidden;background:#e8e8e6;cursor:zoom-in;margin:0}
+.figure img{width:100%;height:auto;display:block;
+  transition:transform 1.6s var(--ease),filter .6s var(--ease)}
+.figure:hover img{transform:scale(1.035)}
+
+/* 网格内统一 4:3 裁切 —— 横图竖图一样高，行内不再有空档 */
+.g2 .figure img,.g3 .figure img{aspect-ratio:4/3;object-fit:cover}
+
+/* 图注改为叠加在图上（常显），彻底消除图下空白 */
+.figure figcaption{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:44px 18px 15px;margin:0;
+  font-size:11px;letter-spacing:.18em;line-height:1.75;font-weight:300;
+  color:rgba(255,255,255,.92);
+  background:linear-gradient(to top,rgba(10,10,10,.82) 0%,rgba(10,10,10,.42) 45%,transparent 100%);
+  transform:translateY(4px);opacity:.98;
+  transition:transform .55s var(--ease),opacity .4s var(--ease)}
+.figure:hover figcaption{transform:translateY(0)}
+.figure figcaption b{color:#fff;font-weight:500;letter-spacing:.2em}
+
+/* 悬停时右上角浮出 VIEW 标记 */
+.figure::after{
+  content:"VIEW";
+  position:absolute;top:14px;right:16px;
+  font-size:9.5px;letter-spacing:.28em;color:#fff;
+  padding:6px 10px;border:1px solid rgba(255,255,255,.5);
+  opacity:0;transform:translateY(-6px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease);
+  pointer-events:none}
+.figure:hover::after{opacity:1;transform:translateY(0)}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.4vw,32px)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,26px)}
+.full{margin-bottom:clamp(14px,2.4vw,32px)}
+.full .px{position:relative}
+.full .px img{aspect-ratio:16/9;object-fit:cover}
+
+/* 三列网格落单时铺满整行，避免右侧空一格 */
+@media (min-width:861px){
+  .g3 .figure:last-child:nth-child(3n+1),
+  .g3 .figure:last-child:nth-child(3n+2){ }
+}
+
+/* 视差容器 */
+.px{overflow:hidden;position:relative}
+.px img{will-change:transform}
+
+/* ---------- 策略卡 ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,34px)}
+.card{border-top:2px solid var(--ink);padding-top:18px}
+.card .k{font-weight:100;font-size:clamp(30px,3.6vw,46px);line-height:1;color:var(--gold)}
+.card .t{margin-top:10px;font-size:clamp(15px,1.6vw,18px);font-weight:500}
+.card .d{margin-top:10px;font-size:clamp(13px,1.35vw,14.5px);
+  font-weight:300;line-height:2;color:var(--mid)}
+
+/* ---------- 反思双栏 ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,5vw,72px)}
+.two h4{font-size:10.5px;letter-spacing:.36em;color:var(--gray);
+  font-weight:500;margin-bottom:20px}
+.two ol{list-style:none;counter-reset:i}
+.two li{position:relative;padding-left:26px;margin-bottom:18px;
+  font-size:clamp(13.5px,1.4vw,15px);font-weight:300;line-height:1.95;color:#4a4a4a}
+.two li::before{counter-increment:i;content:counter(i,decimal-leading-zero);
+  position:absolute;left:0;top:0;font-size:10px;letter-spacing:.1em;color:#c9c9c9;
+  font-weight:500}
+.two li b{font-weight:500;color:var(--ink);display:block;margin-bottom:3px}
+
+/* ---------- 关于 ---------- */
+.about{max-width:1280px;margin:0 auto;
+  padding:clamp(70px,13vh,160px) var(--pad) clamp(50px,9vh,110px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);
+  border-top:1px solid var(--ink)}
+.about h3{font-size:10px;font-weight:500;letter-spacing:.42em;
+  color:var(--gray);margin-bottom:22px}
+.about p{font-size:clamp(14px,1.4vw,16px);font-weight:300;line-height:2.2;color:#444}
+.about p b{font-weight:500;color:var(--ink)}
+.about .contact a{border-bottom:1px solid #ccc;padding-bottom:3px;transition:.3s}
+.about .contact a:hover{color:var(--ink);border-color:var(--ink)}
+
+footer{max-width:1280px;margin:0 auto;
+  padding:clamp(24px,5vh,48px) var(--pad) clamp(40px,8vh,80px);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  font-size:10px;letter-spacing:.24em;color:var(--gray);
+  border-top:1px solid var(--line)}
+
+/* ---------- Lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:300;background:rgba(250,250,250,.985);
+  display:none;align-items:center;justify-content:center;
+  padding:clamp(12px,3vw,40px)}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;
+  opacity:0;transform:scale(.97);
+  transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.lb.on img{opacity:1;transform:scale(1)}
+.lb .close,.lb .prev,.lb .next{position:absolute;font-size:11px;letter-spacing:.3em;
+  color:var(--gray);padding:16px;cursor:pointer;transition:color .3s;user-select:none}
+.lb .close:hover,.lb .prev:hover,.lb .next:hover{color:var(--ink)}
+.lb .close{top:10px;right:10px}
+.lb .prev{left:4px;top:50%;transform:translateY(-50%)}
+.lb .next{right:4px;top:50%;transform:translateY(-50%)}
+.lb .counter{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
+  font-size:10px;letter-spacing:.3em;color:var(--gray)}
+
+@media (max-width:860px){
+  nav .links{display:none}
+  .about{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr;gap:34px}
+  .cards{grid-template-columns:1fr}
+  .g2{grid-template-columns:1fr}
+  .g3{grid-template-columns:1fr}
+  .hero .scroll-hint{display:none}
+  .lede{font-size:clamp(21px,5.4vw,30px)}
+  .stats{gap:22px 34px}
+  .lb .prev,.lb .next{font-size:0;padding:24px 18px}
+  .lb .prev::after{content:"\2039";font-size:28px;letter-spacing:0}
+  .lb .next::after{content:"\203A";font-size:28px;letter-spacing:0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  body.anim .rv{opacity:1;transform:none;transition:none}
+  .hero .scroll-hint i::after{animation:none}
+}
+
+/* ================= 高设计感动效层 ================= */
+
+/* 1) 自定义光标 */
+.cur{position:fixed;top:0;left:0;width:9px;height:9px;border-radius:50%;
+  background:var(--ink);pointer-events:none;z-index:900;
+  transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),background .3s,opacity .3s;
+  mix-blend-mode:difference;opacity:0}
+.cur.on{opacity:1}
+.cur.big{width:64px;height:64px;background:#fff;opacity:.9}
+.cur.ring{position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;
+  border:1px solid rgba(21,21,21,.35);pointer-events:none;z-index:899;
+  transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
+.cur.ring.on{opacity:1}
+
+/* 2) 图片揭幕（clip-path 从下往上揭开） */
+body.anim .figure img{clip-path:inset(0 0 100% 0)}
+body.anim .figure.in img{clip-path:inset(0 0 0 0);
+  transition:clip-path 1.25s var(--ease),transform 1.6s var(--ease)}
+body.anim .figure.in:hover img{transform:scale(1.035)}
+
+/* 3) 章节巨大序号水印 */
+.chapter{position:relative}
+.chapter .ghost{
+  position:absolute;right:clamp(10px,3vw,40px);top:clamp(10px,3vh,30px);
+  font-size:clamp(110px,20vw,300px);font-weight:100;line-height:.8;
+  color:var(--ink);opacity:.045;letter-spacing:-.04em;pointer-events:none;
+  z-index:0;user-select:none}
+.chapter > *:not(.ghost){position:relative;z-index:1}
+
+/* 4) 标题逐字浮现 */
+.split{display:inline-block;overflow:hidden;vertical-align:top}
+.split > i{display:inline-block;font-style:normal;
+  transform:translateY(105%);transition:transform 1s var(--ease)}
+body.anim .split > i{transform:translateY(105%)}
+body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
+
+/* 5) 索引行：hover 时背景扫过 */
+.index li a{position:relative;overflow:hidden}
+.index li a::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(21,21,21,.045),transparent 70%);
+  transform:translateX(-100%);transition:transform .7s var(--ease);z-index:-1}
+.index li a:hover::before{transform:translateX(0)}
+
+/* 6) 策略卡片：hover 抬起 + 顶部线延展 */
+.card{transition:transform .5s var(--ease)}
+.card:hover{transform:translateY(-6px)}
+.card::before{content:"";position:absolute;top:-2px;left:0;height:2px;width:0;
+  background:var(--gold);transition:width .7s var(--ease)}
+.card{position:relative}
+.card:hover::before{width:100%}
+
+/* 7) 大图 hover 轻微提亮 */
+.full .px::after{content:"";position:absolute;inset:0;
+  background:rgba(255,255,255,0);transition:background .6s;pointer-events:none}
+.full:hover .px::after{background:rgba(255,255,255,.06)}
+
+@media (max-width:860px){
+  .cur,.cur.ring{display:none}
+  .chapter .ghost{font-size:clamp(80px,26vw,160px);opacity:.05}
+}
+
+@media print{
+  nav,.progress,.scroll-hint,.lb,.cur,.cur.ring{display:none!important}
+  body.anim .figure img{clip-path:none!important}
+  body.anim .rv{opacity:1!important;transform:none!important}
+  .chapter .ghost{opacity:.05}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="cur" id="cur"></div>
+<div class="cur ring" id="curRing"></div>
+
+<nav id="nav">
+  <span class="logo">高宇泽</span>
+  <div class="links">
+    <a href="#ch1">校园记忆展厅</a>
+    <a href="#ch2">被丢弃的一天</a>
+    <a href="#ch3">之间</a>
+    <a href="#about">关于</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner" id="heroInner">
+    <h1 class="name"><span>GAO</span><span>YUZE<span class="dot" id="dot"></span></span></h1>
+    <p class="role">展陈设计 · 内容策划 · 活动统筹<br>2023—2027　华中科技大学文华学院</p>
+  </div>
+  <div class="scroll-hint"><i></i><span>SCROLL</span></div>
+</header>
+
+<section class="index" id="work">
+  <div class="label rv">作品 / SELECTED WORKS</div>
+  <ol>
+    <li class="rv"><a href="#ch1"><span>校园记忆展厅</span><span class="meta">01 · 永久改造 <span class="arrow">↗</span></span></a></li>
+    <li class="rv d1"><a href="#ch2"><span>被丢弃的一天</span><span class="meta">02 · 临时展陈 <span class="arrow">↗</span></span></a></li>
+    <li class="rv d2"><a href="#ch3"><span>之间</span><span class="meta">03 · 影像空间 <span class="arrow">↗</span></span></a></li>
+  </ol>
+</section>
+
+<!-- ================= 项目一 ================= -->
+<section class="chapter" id="ch1">
+  <div class="ghost" aria-hidden="true">01</div>
+  <div class="ch-head">
+    <div class="ch-no rv">PROJECT 01</div>
+    <h2 class="rv">校园记忆展厅</h2>
+    <div class="ch-en rv d1">Campus Memory Gallery</div>
+    <div class="ch-meta rv d2">
+      <dl><dt>类型</dt><dd>既有空间改造 · 展陈设计</dd></dl>
+      <dl><dt>面积</dt><dd>280 ㎡</dd></dl>
+      <dl><dt>周期</dt><dd>16 周</dd></dl>
+      <dl><dt>角色</dt><dd>主创设计</dd></dl>
+    </div>
+  </div>
+
+  <p class="lede rv">一条 32 米长的走廊，学生在它旁边<wbr>走了四年，<b>却从没走进去过。</b></p>
+
+  <figure class="figure full rv">
+    <div class="px"><img src="img/P1-01.webp" alt="校园记忆展厅主入口" data-speed="0.04"></div>
+    <figcaption><b>主入口</b>　折面橡木门套把 3.2m 的通高让出来，走廊尽头第一次有了「里面」</figcaption>
+  </figure>
+
+  <div class="stats">
+    <div class="stat rv"><div class="v" data-count="3000" data-suffix="+">0</div><div class="k">日均经过人次</div></div>
+    <div class="stat rv d1"><div class="v" data-count="3" data-prefix="&lt;" data-suffix="%">0</div><div class="k">实际进入比例</div></div>
+    <div class="stat rv d2"><div class="v" data-count="32" data-suffix="m">0</div><div class="k">走廊长度</div></div>
+    <div class="stat rv d3"><div class="v" data-count="2.6" data-decimal="1" data-suffix="m">0</div><div class="k">改造前净高</div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-h rv"><span class="n">01</span><h3>场地：位置极好，没人进去</h3><span class="line"></span></div>
+    <p class="rv">它紧邻图书馆的主通道，是全楼人流最密的位置之一。但吊顶把 4.2 米的结构层高压到 2.6 米，单侧开窗让进深 5 米之后几乎全黑，6 根柱子又把这条 32 米的长廊切成 4 段。于是它成了仓库。</p>
+  </div>
+
+  <div class="g3 full">
+    <figure class="figure rv"><img src="img/P2-01.webp" alt="闲置走廊"><figcaption><b>闲置</b>　旧桌椅与纸箱堆了几年</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/P2-02.webp" alt="低矮吊顶"><figcaption><b>压抑</b>　吊顶压低 1.6 米层高</figcaption></figure>
+    <figure class="figure rv d2"><img src="img/P2-04.webp" alt="单侧采光"><figcaption><b>昏暗</b>　单侧采光，深处常年靠灯</figcaption></figure>
+  </div>
+
+  <div class="block">
+    <div class="block-h rv"><span class="n">02</span><h3>策略：不跟限制对抗，把它变成依据</h3><span class="line"></span></div>
+    <p class="rv">低吊顶给出层高红利，密柱网给出展线节奏，单侧采光给出折面墙的角度。<b>三个缺陷，恰好对应三个动作。</b></p>
+  </div>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/P3-01.webp" alt="概念草图"><figcaption><b>折面墙推演</b>　从纸的翻折出发，比较 5 种折角，最终选定 60°</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/P3-02.webp" alt="书页灵感"><figcaption><b>灵感</b>　书页翻动时的曲面承载着「一页一页往下读」的时间感</figcaption></figure>
+  </div>
+
+  <div class="cards" style="margin-bottom:clamp(40px,7vh,80px)">
+    <div class="card rv"><div class="k">01</div><div class="t">拆 — 把高度还回来</div><div class="d">拆掉 2.6m 的吊顶，露出 4.2m 结构板整体刷白。造价极低，却直接让空间从「走廊」变成「厅」。</div></div>
+    <div class="card rv d1"><div class="k">02</div><div class="t">折 — 用折面墙代替隔墙</div><div class="d">6 道 60° 折面墙同时做三件事：划分展区、引导视线、把侧窗光反射到进深 6 米处。</div></div>
+    <div class="card rv d2"><div class="k">03</div><div class="t">借 — 把柱变成节点</div><div class="d">6 根柱不包不藏，作为展线的天然分段点。柱间各成一个主题展区，柱身做导视载体。</div></div>
+  </div>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/P3-04.webp" alt="功能分区"><figcaption><b>功能分区</b>　序厅 6m｜主展区 18m（4 柱间 4 主题）｜互动区 8m</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/P3-05.webp" alt="参观动线"><figcaption><b>参观动线</b>　单向环形 34m，正常步速 12 分钟走完</figcaption></figure>
+  </div>
+
+  <div class="block">
+    <div class="block-h rv"><span class="n">03</span><h3>成果</h3><span class="line"></span></div>
+  </div>
+
+  <figure class="figure full rv">
+    <div class="px"><img src="img/P4-03.webp" alt="主展区效果" data-speed="0.05"></div>
+    <figcaption><b>主展区</b>　折面墙在 60° 折角处形成连续展面，灯槽藏在折缝里，见光不见灯</figcaption>
+  </figure>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/P4-01.webp" alt="总平面"><figcaption><b>总平面</b>　280 ㎡ 三段式，展线全长 34m</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/P4-02.webp" alt="轴测鸟瞰"><figcaption><b>轴测鸟瞰</b>　三道折面墙把 32m 长空间切出节奏</figcaption></figure>
+  </div>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/P4-04.webp" alt="展墙立面"><figcaption><b>展墙立面展开</b>　以 1.2m 为模数：0.8m 展柜／1.4m 展板／1.0m 留白</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/P4-06.webp" alt="折角细节"><figcaption><b>折角与灯槽</b>　60° 折角 45° 斜拼收口，40mm 灯槽藏在折缝内侧</figcaption></figure>
+  </div>
+
+  <div class="block">
+    <div class="block-h rv"><span class="n">04</span><h3>反思</h3><span class="line"></span></div>
+  </div>
+
+  <div class="two" style="margin-bottom:clamp(40px,7vh,80px)">
+    <div class="rv">
+      <h4>做对了什么</h4>
+      <ol>
+        <li><b>拆吊顶是性价比最高的决定</b>没增加造价，只做了一件事，空间的等级就变了。后来所有展陈尺度的余量都建立在这一步上。</li>
+        <li><b>承认限制比对抗限制省力</b>6 根柱原本想包掉，后来意识到它们正好把 32m 分成 4 段——那就顺势做成 4 个展区。</li>
+        <li><b>一个构件解决三个问题</b>折面墙同时承担分区、导视与反光。这是我在这个项目里学到最实用的一条。</li>
+      </ol>
+    </div>
+    <div class="rv d1">
+      <h4>还有哪些不够</h4>
+      <ol>
+        <li><b>照度提升 40% 是模拟值</b>没有用照度计复测。如果继续深化，第一件事应该是带仪器去现场量一整天。</li>
+        <li><b>展具是固定的，适应性不够</b>展台按标准尺寸做死，遇到大幅作品就要临时改。下一版应改为可调节模数。</li>
+        <li><b>没有考虑无障碍与儿童视高</b>展板下沿 0.8m，对轮椅使用者和低龄参观者都偏高。这是明确留下的缺陷。</li>
+        <li><b>60° 折角只在这个尺度验证过</b>换到更宽或更短的房间，这个角度需要重新推敲，不能直接套用。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 项目二 ================= -->
+<section class="chapter" id="ch2">
+  <div class="ghost" aria-hidden="true">02</div>
+  <div class="ch-head">
+    <div class="ch-no rv">PROJECT 02</div>
+    <h2 class="rv">被丢弃的一天</h2>
+    <div class="ch-en rv d1">A Day of Being Discarded</div>
+    <div class="ch-meta rv d2">
+      <dl><dt>类型</dt><dd>临时展陈 · 互动装置</dd></dl>
+      <dl><dt>面积</dt><dd>180 ㎡</dd></dl>
+      <dl><dt>工期</dt><dd>7 天</dd></dl>
+      <dl><dt>角色</dt><dd>项目负责人</dd></dl>
+    </div>
+  </div>
+
+  <p class="lede rv">我们每天都在扔东西，<b>却从没见过它们被扔掉之后的样子。</b></p>
+
+  <figure class="figure full rv">
+    <div class="px"><img src="img/Q1-01.webp" alt="纸板拱廊展陈" data-speed="0.04"></div>
+    <figcaption><b>展陈全景</b>　9 道纸板拱 + 悬吊的回收瓶阵，在中庭里长出一条 40 米的隧道</figcaption>
+  </figure>
+
+  <div class="stats">
+    <div class="stat rv"><div class="v" data-count="1200" data-suffix="+">0</div><div class="k">累计参观人次</div></div>
+    <div class="stat rv d1"><div class="v" data-count="92" data-suffix="%">0</div><div class="k">材料回收率</div></div>
+    <div class="stat rv d2"><div class="v" data-count="7" data-suffix="天">0</div><div class="k">从进场到撤场</div></div>
+    <div class="stat rv d3"><div class="v" data-count="0" data-suffix="元">0</div><div class="k">场地改造花费</div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-h rv"><span class="n">01</span><h3>场地：四面通透，没有人停</h3><span class="line"></span></div>
+    <p class="rv">中庭采光好、人流必经、尺度完整——但它只是一个通道。日均 2000 多人穿过，平均停留不到 20 秒。<b>问题不在空间太小，而在这个空间「看不见」。</b></p>
+  </div>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/Q2-01.webp" alt="空旷中庭"><figcaption><b>有空间，无内容</b>　中庭尺度完整，但大面积地面只是被穿过</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/Q2-02.webp" alt="快速穿行"><figcaption><b>经过而非停留</b>　人流沿对角线穿行，没有一个点让人放慢</figcaption></figure>
+  </div>
+
+  <div class="block">
+    <div class="block-h rv"><span class="n">02</span><h3>策略：用最便宜的材料做最强的空间感</h3><span class="line"></span></div>
+    <p class="rv">预算和工期都不允许「精致」，那就反过来——纸板做拱、废瓶做光、旧托盘做台。</p>
+  </div>
+
+  <div class="cards" style="margin-bottom:clamp(40px,7vh,80px)">
+    <div class="card rv"><div class="k">01</div><div class="t">拱 — 用纸板造出「里面」</div><div class="d">9 道瓦楞纸板半圆拱从 1.8m 递升到 2.6m，形成有起伏的隧道，让人从「路过」变成「走进去」。</div></div>
+    <div class="card rv d1"><div class="k">02</div><div class="t">悬 — 把垃圾挂到头顶</div><div class="d">回收塑料瓶串在铁丝上悬到 3.2m，必须仰头才看得到全貌。顶光穿过瓶身，在地面投下晃动的光斑。</div></div>
+    <div class="card rv d2"><div class="k">03</div><div class="t">台 — 用旧托盘做低座</div><div class="d">食堂淘汰的木托盘直接当展台与坐凳，高 15cm：站着能看、蹲下能玩、累了一坐。展后整块回收。</div></div>
+  </div>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/Q3-01.webp" alt="拱廊推演草图"><figcaption><b>拱廊推演</b>　比较单拱、双拱与连续拱，最终选连续半圆拱</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/Q3-04.webp" alt="参与动线"><figcaption><b>参与动线</b>　单向穿行 40m，8—12 分钟走完，中途 3 个互动停留点</figcaption></figure>
+  </div>
+
+  <figure class="figure full rv">
+    <div class="px"><img src="img/Q4-03.webp" alt="拱廊内部" data-speed="0.05"></div>
+    <figcaption><b>拱廊内部</b>　纸板拱沿对角线递升，右侧悬吊的塑料瓶在逆光下形成一道半透明的帘</figcaption>
+  </figure>
+
+  <div class="g3 full">
+    <figure class="figure rv"><img src="img/Q4-01.webp" alt="平面布置"><figcaption><b>平面布置</b>　对角布局</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/Q4-02.webp" alt="轴测鸟瞰"><figcaption><b>轴测鸟瞰</b>　拱廊切出一条路径</figcaption></figure>
+    <figure class="figure rv d2"><img src="img/Q4-05.webp" alt="互动界面"><figcaption><b>互动界面</b>　无电无屏，靠手感参与</figcaption></figure>
+  </div>
+
+  <div class="two" style="margin-bottom:clamp(40px,7vh,80px)">
+    <div class="rv">
+      <h4>做对了什么</h4>
+      <ol>
+        <li><b>用最便宜的材料解决了「太空」</b>9 道纸板拱总造价不到一千元，却把 180㎡ 空场变成 40 米隧道。空间改变不靠昂贵材料，靠尺度判断。</li>
+        <li><b>一块布（绒布）式的多义性</b>纸板既是结构也是界面，托盘既是展台也是座位。预算极低时，材料的多义性比精致更重要。</li>
+        <li><b>七天搭完、半天拆净</b>临时展陈真正的考验不是搭得多好看，而是能不能利落地撤走。撤场后地面没留一颗钉子。</li>
+      </ol>
+    </div>
+    <div class="rv d1">
+      <h4>还有哪些不够</h4>
+      <ol>
+        <li><b>纸板不耐潮，第三天就软化</b>赶上小雨，拱脚吸潮变形。下一版应在拱脚加防水隔离层或改架空底座。</li>
+        <li><b>悬吊高度只考虑了成人</b>3.2m 挂点对小学生偏高，仰头有压迫感。没有做分层挂点设计。</li>
+        <li><b>互动偏「看」，动手不够</b>三个停留点里两个是「看」，只有一个真正动手。参与深度低于预期。</li>
+        <li><b>没整理成可复用的方法</b>经验全靠现场摸索，没留下图纸与手册，下一届要从头再来。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 项目三 ================= -->
+<section class="chapter" id="ch3">
+  <div class="ghost" aria-hidden="true">03</div>
+  <div class="ch-head">
+    <div class="ch-no rv">PROJECT 03</div>
+    <h2 class="rv">之间</h2>
+    <div class="ch-en rv d1">Between</div>
+    <div class="ch-meta rv d2">
+      <dl><dt>类型</dt><dd>影像空间 · 临时展陈</dd></dl>
+      <dl><dt>面积</dt><dd>120 ㎡</dd></dl>
+      <dl><dt>展期</dt><dd>16 天</dd></dl>
+      <dl><dt>角色</dt><dd>影像呈现负责人</dd></dl>
+    </div>
+  </div>
+
+  <p class="lede rv">我们每天看几百段视频，<b>但没有一次真的「走进去」看过。</b></p>
+
+  <figure class="figure full rv">
+    <div class="px"><img src="img/R1-01.webp" alt="暗场影像空间" data-speed="0.04"></div>
+    <figcaption><b>主投影区</b>　5.6m 宽画面占满后墙，两侧绒布把杂光吃到几乎为零</figcaption>
+  </figure>
+
+  <div class="stats">
+    <div class="stat rv"><div class="v" data-count="860" data-suffix="+">0</div><div class="k">累计观展人次</div></div>
+    <div class="stat rv d1"><div class="v" data-count="16" data-suffix="天">0</div><div class="k">展期</div></div>
+    <div class="stat rv d2"><div class="v" data-count="4.6" data-decimal="1" data-suffix="m">0</div><div class="k">最长停留时长</div></div>
+    <div class="stat rv d3"><div class="v" data-count="0" data-suffix="元">0</div><div class="k">遮光改造成本</div></div>
+  </div>
+
+  <div class="block">
+    <div class="block-h rv"><span class="n">01</span><h3>场地：所有缺点里，只有一个对影像是优点</h3><span class="line"></span></div>
+    <p class="rv">跨校赛事的作品评完奖就再没人看得到，因为全校没有一处能放影像的空间——所有教室都有窗。直到找到教学楼负一层这间没有窗的仓库：<b>设计要做的不是制造黑暗，而是不把黑暗浪费掉。</b></p>
+  </div>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/R2-01.webp" alt="无窗仓库"><figcaption><b>被当成仓库的暗房</b>　无窗、无外部光，对杂物间是劣势，对放映厅是现成条件</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/R2-03.webp" alt="唯一光源"><figcaption><b>唯一的光源</b>　楼梯口是空间唯一漏光点，也是唯一要处理的光污染</figcaption></figure>
+  </div>
+
+  <div class="cards" style="margin-bottom:clamp(40px,7vh,80px)">
+    <div class="card rv"><div class="k">01</div><div class="t">吸 — 用绒布把杂光吃干净</div><div class="d">侧墙与天花挂黑绒布遮住糙墙，反射率不到 3%。既解决不能投影的问题，也让投影的黑真正黑下去。</div></div>
+    <div class="card rv d1"><div class="k">02</div><div class="t">折 — 用斜置屏切出第二个空间</div><div class="d">两片屏以 30° 斜角立在房间中部，把 120㎡ 分成前后两区。人在两屏之间穿行时会在两个叙事里来回切换。</div></div>
+    <div class="card rv d2"><div class="k">03</div><div class="t">接 — 用镜面把光带出去</div><div class="d">波纹金属板与镜面不锈钢条把投影的光反射到地面与远处墙面，让画面不至于只停在墙上一块。</div></div>
+  </div>
+
+  <div class="g2 full">
+    <figure class="figure rv"><img src="img/R3-01.webp" alt="光路推演草图"><figcaption><b>光路推演</b>　比较正投、斜投与双机对投，最终选后者</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/R3-04.webp" alt="光路与动线"><figcaption><b>光路与动线</b>　两台投影光锥互不交叉，观众沿斜屏之间的窄道前行</figcaption></figure>
+  </div>
+
+  <figure class="figure full rv">
+    <div class="px"><img src="img/R4-03.webp" alt="主投影区" data-speed="0.05"></div>
+    <figcaption><b>主投影区</b>　光从墙面溢到地面形成倒影，两侧绒布把杂光吃到几乎为零，人物因此变成纯黑剪影</figcaption>
+  </figure>
+
+  <div class="g3 full">
+    <figure class="figure rv"><img src="img/R4-01.webp" alt="平面布置"><figcaption><b>平面布置</b>　三段式</figcaption></figure>
+    <figure class="figure rv d1"><img src="img/R4-02.webp" alt="轴测鸟瞰"><figcaption><b>轴测鸟瞰</b>　两片斜屏切出两个光区</figcaption></figure>
+    <figure class="figure rv d2"><img src="img/R4-05.webp" alt="反射细节"><figcaption><b>反射细节</b>　把画面延伸到侧面</figcaption></figure>
+  </div>
+
+  <div class="two" style="margin-bottom:clamp(40px,7vh,80px)">
+    <div class="rv">
+      <h4>做对了什么</h4>
+      <ol>
+        <li><b>没有花钱做遮光</b>影像展最大的成本项就是遮光。找到一间无窗仓库，这一项直接归零。设计第一步是找对地方，不是选对材料。</li>
+        <li><b>一块布解决了三个问题</b>黑绒布既遮墙、又吸光、还把混响从 1.4s 压到 0.6s。预算极低时，材料的多义性比精致更重要。</li>
+        <li><b>让第二块屏有了理由</b>只把一面墙投满，和在家看电影没区别。斜置两片屏让人必须走动才能看全，把「看」变成了「走」。</li>
+      </ol>
+    </div>
+    <div class="rv d1">
+      <h4>还有哪些不够</h4>
+      <ol>
+        <li><b>通风差，人待久了会闷</b>负一层没有新风，十几个人时体感明显。这一点到最后也没解决。</li>
+        <li><b>双机切换靠手动</b>两台投影切换需要人按遥控，没有同步控制。展期一长就是麻烦。</li>
+        <li><b>声学只做了一半</b>混响降到 0.6s，但低频依然浑。没有做低频吸音，鼓点一密就糊。</li>
+        <li><b>没考虑排队与限流</b>一次最多容纳 25 人，周末出现过排队，但没有等候区和引导。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 关于 ================= -->
+<section class="about" id="about">
+  <div class="rv">
+    <h3>关于</h3>
+    <p>环境设计专业本科在读，2027 届。<br>做展陈，也做内容和活动——<b>喜欢把一件事从想法一直推到落地</b>，并且相信空间本身就是一种叙事。</p>
+    <p style="margin-top:1.6em;color:#6a6a6a">三个项目看起来差别很大：一个是永久改造，一个是 7 天搭完的临时展陈，一个是把黑暗中<wbr>的一间仓库变成放映厅。但做法是同一条——<b>不和场地的缺陷对抗，把它变成设计的依据。</b></p>
+  </div>
+  <div class="rv d1">
+    <h3>联系</h3>
+    <p class="contact">
+      <a href="mailto:3050918827@qq.com">3050918827@qq.com</a><br>
+      <a href="tel:17685587339">176 8558 7339</a><br>
+      山东 · 青岛
+    </p>
+    <p style="margin-top:2.4em;color:#9a9a9a;font-size:12px;letter-spacing:.16em">华中科技大学文华学院 · 城市建设工程学部 · 环境设计</p>
+  </div>
+</section>
+
+<footer>
+  <span>高宇泽 · 展陈设计作品集</span>
+  <span>3 PROJECTS · 2026</span>
+</footer>
+
+<div class="lb" id="lb">
+  <img id="lbImg" alt="">
+  <div class="close" id="lbClose">CLOSE ×</div>
+  <div class="prev" id="lbPrev">‹</div>
+  <div class="next" id="lbNext">›</div>
+  <div class="counter" id="lbCount"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var isTouch = matchMedia("(hover: none)").matches;
+  var body = document.body;
+
+  /* ---- 进度条 + 导航隐藏 ---- */
+  var prog = document.getElementById("progress"), nav = document.getElementById("nav"), lastY = 0;
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - innerHeight;
+    var y = scrollY;
+    prog.style.width = (h > 0 ? (y/h)*100 : 0) + "%";
+    if (y > lastY && y > 300) nav.classList.add("hide"); else nav.classList.remove("hide");
+    lastY = y;
+  }
+  addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+
+  /* ---- Hero 视差 ---- */
+  var hero = document.querySelector(".hero");
+  var heroInner = document.getElementById("heroInner");
+  var dot = document.getElementById("dot");
+  if (hero && !isTouch && !reduce){
+    var raf = null, tx = 0, ty = 0;
+    hero.addEventListener("mousemove", function(e){
+      var r = hero.getBoundingClientRect();
+      tx = (e.clientX - r.left)/r.width - .5;
+      ty = (e.clientY - r.top)/r.height - .5;
+      if (raf) return;
+      raf = requestAnimationFrame(function(){
+        heroInner.style.transform = "translate3d("+(tx*16)+"px,"+(ty*11)+"px,0)";
+        dot.style.transform = "translate3d("+(tx*-40)+"px,"+(ty*-26)+"px,0)";
+        raf = null;
+      });
+    });
+    hero.addEventListener("mouseleave", function(){
+      heroInner.style.transform = ""; dot.style.transform = "";
+    });
+  }
+
+  /* ---- 滚动淡入 ---- */
+  var rvs = [].slice.call(document.querySelectorAll(".rv"));
+  if ("IntersectionObserver" in window && !reduce){
+    body.classList.add("anim");
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, {rootMargin:"0px 0px -10% 0px", threshold:.05});
+    rvs.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---- 数字滚动 ---- */
+  var nums = [].slice.call(document.querySelectorAll("[data-count]"));
+  function runCount(el){
+    var target = parseFloat(el.dataset.count);
+    var dec = parseInt(el.dataset.decimal || "0", 10);
+    var pre = el.dataset.prefix || "";
+    var suf = el.dataset.suffix || "";
+    var dur = 1500, t0 = null;
+    function step(t){
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0)/dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      var v = target * e;
+      el.innerHTML = pre + (dec ? v.toFixed(dec) : Math.round(v)) + (suf ? "<em>"+suf+"</em>" : "");
+      if (p < 1) requestAnimationFrame(step);
+      else el.innerHTML = pre + (dec ? target.toFixed(dec) : target) + (suf ? "<em>"+suf+"</em>" : "");
+    }
+    requestAnimationFrame(step);
+  }
+  if ("IntersectionObserver" in window && !reduce){
+    var io2 = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if (en.isIntersecting){ runCount(en.target); io2.unobserve(en.target); }
+      });
+    }, {threshold:.5});
+    nums.forEach(function(el){ io2.observe(el); });
+  } else {
+    nums.forEach(function(el){
+      var d = el.dataset;
+      el.innerHTML = (d.prefix||"") + d.count + (d.suffix ? "<em>"+d.suffix+"</em>" : "");
+    });
+  }
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+
+  /* ---- 图片视差（滚动时按 data-speed 轻微位移） ---- */
+  var pxImgs = [].slice.call(document.querySelectorAll(".px img[data-speed]"));
+  if (pxImgs.length && !reduce){
+    var ticking = false;
+    function parallax(){
+      var vh = innerHeight;
+      pxImgs.forEach(function(img){
+        var r = img.parentElement.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        var sp = parseFloat(img.dataset.speed) || 0.04;
+        var rel = (r.top + r.height/2 - vh/2);   /* 相对视口中心 */
+        img.style.transform = "translate3d(0," + (-rel * sp).toFixed(1) + "px,0) scale(1.08)";
+      });
+      ticking = false;
+    }
+    addEventListener("scroll", function(){
+      if (!ticking){ requestAnimationFrame(parallax); ticking = true; }
+    }, {passive:true});
+    addEventListener("resize", parallax);
+    parallax();
+  }
+
+  /* ---- Lightbox ---- */
+  var lb = document.getElementById("lb");
+  var lbImg = document.getElementById("lbImg");
+  var lbCount = document.getElementById("lbCount");
+  var figs = [].slice.call(document.querySelectorAll(".figure"));
+  var srcs = figs.map(function(f){ return f.querySelector("img").getAttribute("src"); });
+  var alts = figs.map(function(f){ return f.querySelector("img").alt || ""; });
+  var cur = 0;
+
+  function openAt(i){
+    cur = (i + figs.length) % figs.length;
+    lbImg.src = srcs[cur];
+    lbImg.alt = alts[cur];
+    lbCount.textContent = (cur+1) + " / " + figs.length;
+    lb.classList.add("on");
+    document.body.style.overflow = "hidden";
+  }
+  function close(){
+    lb.classList.remove("on");
+    document.body.style.overflow = "";
+  }
+  figs.forEach(function(f, i){ f.addEventListener("click", function(){ openAt(i); }); });
+  document.getElementById("lbClose").addEventListener("click", close);
+  document.getElementById("lbPrev").addEventListener("click", function(e){ e.stopPropagation(); openAt(cur-1); });
+  document.getElementById("lbNext").addEventListener("click", function(e){ e.stopPropagation(); openAt(cur+1); });
+  lb.addEventListener("click", function(e){ if (e.target === lb) close(); });
+  document.addEventListener("keydown", function(e){
+    if (!lb.classList.contains("on")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") openAt(cur-1);
+    if (e.key === "ArrowRight") openAt(cur+1);
+  });
+  var sx=0, sy=0;
+  lb.addEventListener("touchstart", function(e){ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
+  lb.addEventListener("touchend", function(e){
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) openAt(dx < 0 ? cur+1 : cur-1);
+  }, {passive:true});
+
+  /* ---- 锚点平滑滚动 ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      var t = document.getElementById(this.getAttribute("href").slice(1));
+      if (!t) return;
+      e.preventDefault();
+      scrollTo({top: t.getBoundingClientRect().top + scrollY - 40, behavior:"smooth"});
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var isTouch = matchMedia("(hover: none)").matches;
+  var body = document.body;
+
+  /* ===== 1. 自定义光标（环 + 点，悬停图片时放大） ===== */
+  var cur = document.getElementById("cur"), ring = document.getElementById("curRing");
+  if (cur && ring && !isTouch && !reduce){
+    var mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+    cur.classList.add("on"); ring.classList.add("on");
+    addEventListener("mousemove", function(e){
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + "px"; cur.style.top = my + "px";
+    }, {passive:true});
+    (function loop(){
+      rx += (mx - rx) * 0.16;
+      ry += (my - ry) * 0.16;
+      ring.style.left = rx + "px"; ring.style.top = ry + "px";
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll(".figure, .index li a, .card").forEach(function(el){
+      el.addEventListener("mouseenter", function(){ cur.classList.add("big"); });
+      el.addEventListener("mouseleave", function(){ cur.classList.remove("big"); });
+    });
+  }
+
+  /* ===== 2. 标题逐字浮现 ===== */
+  if (!reduce){
+    document.querySelectorAll(".ch-head h2").forEach(function(h){
+      var txt = h.textContent.trim();
+      h.textContent = "";
+      [].forEach.call(txt, function(ch){
+        var s = document.createElement("span");
+        s.className = "split";
+        var i = document.createElement("i");
+        i.textContent = ch === " " ? "\u00A0" : ch;
+        s.appendChild(i);
+        h.appendChild(s);
+      });
+      [].forEach.call(h.querySelectorAll(".split > i"), function(el, idx){
+        el.style.transitionDelay = (idx * 55) + "ms";
+      });
+    });
+    /* h2 进入视口时展开 */
+    if ("IntersectionObserver" in window){
+      var io3 = new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if (en.isIntersecting){ en.target.classList.add("in"); io3.unobserve(en.target); }
+        });
+      }, {threshold:.3});
+      document.querySelectorAll(".ch-head h2").forEach(function(h){ io3.observe(h); });
+    }
+  }
+
+  /* ===== 3. 图片鼠标跟随视差（hover 时图片轻微跟手位移） ===== */
+  if (!isTouch && !reduce){
+    document.querySelectorAll(".figure").forEach(function(fig){
+      var img = fig.querySelector("img");
+      if (!img) return;
+      fig.addEventListener("mousemove", function(e){
+        var r = fig.getBoundingClientRect();
+        var x = (e.clientX - r.left)/r.width - .5;
+        var y = (e.clientY - r.top)/r.height - .5;
+        img.style.transform = "scale(1.06) translate(" + (x*-12) + "px," + (y*-10) + "px)";
+      });
+      fig.addEventListener("mouseleave", function(){ img.style.transform = ""; });
+    });
+  }
+
+  /* ===== 4. 章节标题进入时横线生长 ===== */
+  if ("IntersectionObserver" in window && !reduce){
+    var io4 = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add("in"); io4.unobserve(en.target); }
+      });
+    }, {threshold:.15});
+    document.querySelectorAll(".ch-head, .block-h").forEach(function(el){ io4.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
