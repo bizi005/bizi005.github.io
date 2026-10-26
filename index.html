@@ -424,7 +424,8 @@ footer{max-width:1280px;margin:0 auto;
 .cur.ring.on{opacity:1}
 
 /* 2) 图片揭幕（clip-path 从下往上揭开） */
-body.anim .figure img{clip-path:inset(0 0 100% 0)}
+/* 默认瞬时隐藏（无过渡），只有进入时才平滑揭开，避免离开时反向收缩 */
+body.anim .figure img{clip-path:inset(0 0 100% 0);transition:none}
 body.anim .figure.in img{clip-path:inset(0 0 0 0);
   transition:clip-path 1.25s var(--ease),transform 1.6s var(--ease)}
 body.anim .figure.in:hover img{transform:scale(1.035)}
@@ -1023,17 +1024,20 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
   var rvs = [].slice.call(document.querySelectorAll(".rv"));
   if ("IntersectionObserver" in window && !reduce){
     body.classList.add("anim");
+    /* 双向：进入视口播放，完全离开后重置，往回滚会再播一次 */
     var io = new IntersectionObserver(function(es){
       es.forEach(function(en){
-        if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+        if (en.isIntersecting) en.target.classList.add("in");
+        else en.target.classList.remove("in");
       });
-    }, {rootMargin:"0px 0px -10% 0px", threshold:.05});
+    }, {rootMargin:"0px 0px -8% 0px", threshold:.06});
     rvs.forEach(function(el){ io.observe(el); });
   }
 
   /* ---- 数字滚动 ---- */
   var nums = [].slice.call(document.querySelectorAll("[data-count]"));
   function runCount(el){
+    el.dataset.running = "1";
     var target = parseFloat(el.dataset.count);
     var dec = parseInt(el.dataset.decimal || "0", 10);
     var pre = el.dataset.prefix || "";
@@ -1051,11 +1055,18 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
     requestAnimationFrame(step);
   }
   if ("IntersectionObserver" in window && !reduce){
+    /* 双向：离开视口后清零，滚回来重新从 0 涨上去 */
     var io2 = new IntersectionObserver(function(es){
       es.forEach(function(en){
-        if (en.isIntersecting){ runCount(en.target); io2.unobserve(en.target); }
+        var el = en.target;
+        if (en.isIntersecting){
+          if (!el.dataset.running) runCount(el);
+        } else {
+          el.dataset.running = "";
+          el.innerHTML = "0";
+        }
       });
-    }, {threshold:.5});
+    }, {threshold:.45});
     nums.forEach(function(el){ io2.observe(el); });
   } else {
     nums.forEach(function(el){
@@ -1191,11 +1202,13 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
     });
     /* h2 进入视口时展开 */
     if ("IntersectionObserver" in window){
+      /* 双向：标题离开后再回来会重新逐字浮出 */
       var io3 = new IntersectionObserver(function(es){
         es.forEach(function(en){
-          if (en.isIntersecting){ en.target.classList.add("in"); io3.unobserve(en.target); }
+          if (en.isIntersecting) en.target.classList.add("in");
+          else en.target.classList.remove("in");
         });
-      }, {threshold:.3});
+      }, {threshold:.25});
       document.querySelectorAll(".ch-head h2").forEach(function(h){ io3.observe(h); });
     }
   }
@@ -1219,7 +1232,8 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
   if ("IntersectionObserver" in window && !reduce){
     var io4 = new IntersectionObserver(function(es){
       es.forEach(function(en){
-        if (en.isIntersecting){ en.target.classList.add("in"); io4.unobserve(en.target); }
+        if (en.isIntersecting) en.target.classList.add("in");
+        else en.target.classList.remove("in");
       });
     }, {threshold:.15});
     document.querySelectorAll(".ch-head, .block-h").forEach(function(el){ io4.observe(el); });
@@ -1267,6 +1281,15 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
         es.forEach(function(en){
           if (en.isIntersecting && !played){
             played = true;
+            /* 离开视口时复位，滚回来会再示范一次 */
+            (function(box){
+              var ioOut = new IntersectionObserver(function(es){
+                es.forEach(function(en){
+                  if (!en.isIntersecting && !dragging){ played = false; t0 = null; }
+                });
+              }, {threshold:.1});
+              ioOut.observe(box);
+            })(box);
             function anim(ts){
               if (dragging) return;
               if (!t0) t0 = ts;
@@ -1277,7 +1300,6 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
               else setPos(50);
             }
             requestAnimationFrame(anim);
-            io.unobserve(box);
           }
         });
       }, {threshold:.4});
