@@ -255,6 +255,164 @@ footer{max-width:1280px;margin:0 auto;
   .hero .scroll-hint i::after{animation:none}
 }
 
+
+/* ================= 对比滑块 ================= */
+.cmp{
+  position: relative;
+  overflow: hidden;
+  cursor: ew-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  background: #e8e8e6;
+  touch-action: pan-y;
+  aspect-ratio: 16/9;
+}
+.cmp img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.cmp .after-wrap{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(0 0 0 50%);
+  transition: clip-path .06s linear;
+}
+.cmp .bar{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 12px rgba(0,0,0,.45);
+  transform: translateX(-1px);
+  pointer-events: none;
+  transition: left .06s linear;
+}
+.cmp .knob{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 4px 20px rgba(0,0,0,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: #151515;
+  pointer-events: none;
+  transition: left .06s linear, transform .3s var(--ease);
+}
+.cmp:hover .knob{ transform: scale(1.08) }
+.cmp .tag{
+  position: absolute;
+  top: 14px;
+  font-size: 9.5px;
+  letter-spacing: .26em;
+  padding: 6px 12px;
+  color: #fff;
+  background: rgba(10,10,10,.55);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+.cmp .tag.l{ left: 14px }
+.cmp .tag.r{ right: 14px }
+
+/* ================= 横向滚动区段 ================= */
+.hs{ position: relative }
+.hs-pin{
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vh, 40px) var(--pad);
+}
+/* 四张一排，屏幕内全部可见；横向视差靠图片内部位移实现，不移动容器 */
+.hs-track{
+  display: flex;
+  gap: clamp(12px, 1.8vw, 26px);
+}
+.hs-item{
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.hs-item img{
+  will-change: transform;
+}
+
+.hs-item figure{ margin: 0 }
+/* 材质图原图为竖版 2:3，框必须同比例，否则 cover 会裁掉上下 */
+.hs-item img{
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+}
+.hs-item figcaption{
+  font-size: 11px;
+  letter-spacing: .18em;
+  line-height: 1.7;
+  color: var(--gray);
+  padding-top: 12px;
+  font-weight: 300;
+}
+.hs-item figcaption b{ color: var(--mid); font-weight: 500 }
+.hs-head{
+  margin-bottom: clamp(18px, 3vh, 30px);
+}
+.hs-head .n{ font-size: 10px; letter-spacing: .3em; color: var(--gold); font-weight: 500 }
+.hs-head h3{ font-weight: 200; font-size: clamp(20px, 2.6vw, 34px); margin-top: 8px }
+
+
+/* ================= 章节标题吸顶 ================= */
+.ch-sticky{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: clamp(14px, 2.4vh, 26px) 0 clamp(12px, 2vh, 20px);
+  background: rgba(250,250,250,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s;
+}
+.ch-sticky.on{ border-bottom-color: var(--line) }
+.ch-sticky .row{
+  display: flex;
+  align-items: baseline;
+  gap: clamp(12px, 2vw, 26px);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+.ch-sticky .no{ font-size: 10px; letter-spacing: .3em; color: var(--gold); font-weight: 500 }
+.ch-sticky h3{ font-weight: 300; font-size: clamp(15px, 1.8vw, 21px); letter-spacing: .02em }
+.ch-sticky .cur{
+  margin-left: auto;
+  font-size: 10px;
+  letter-spacing: .26em;
+  color: var(--gray);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.ch-sticky.on .cur{ opacity: 1 }
+
+@media (max-width: 860px){
+  .cmp{ aspect-ratio: 4/3 }
+  .cmp .knob{ width: 40px; height: 40px; margin: -20px 0 0 -20px }
+  .hs-track{ grid-template-columns: 1fr 1fr }
+  .ch-sticky{ position: relative }
+}
+
 /* ================= 高设计感动效层 ================= */
 
 /* 1) 自定义光标 */
@@ -372,6 +530,14 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
     </div>
   </div>
 
+  <div class="ch-sticky" data-ch="01">
+    <div class="row">
+      <span class="no">01</span>
+      <h3>校园记忆展厅</h3>
+      <span class="cur">CAMPUS MEMORY GALLERY</span>
+    </div>
+  </div>
+
   <p class="lede rv">一条 32 米长的走廊，学生在它旁边<wbr>走了四年，<b>却从没走进去过。</b></p>
 
   <figure class="figure full rv">
@@ -431,21 +597,39 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 
   <div class="block-h rv" style="margin-bottom:14px"><span class="n">材料</span><h3>四种材料撑起整个界面</h3><span class="line"></span></div>
 
-  <div class="g4 full">
-    <figure class="figure rv"><img src="img/P3-06.webp" alt="浅橡木"><figcaption><b>浅橡木饰面</b>　折面墙主材</figcaption></figure>
-    <figure class="figure rv d1"><img src="img/P3-07.webp" alt="暖灰微水泥"><figcaption><b>暖灰微水泥</b>　地面通铺</figcaption></figure>
-    <figure class="figure rv d2"><img src="img/P3-08.webp" alt="拉丝铝"><figcaption><b>拉丝铝</b>　展架与灯槽</figcaption></figure>
-    <figure class="figure rv d3"><img src="img/P3-09.webp" alt="暖白乳胶漆"><figcaption><b>暖白乳胶漆</b>　天花与侧墙</figcaption></figure>
+  <section class="hs rv" id="hs1">
+  <div class="hs-pin">
+    <div class="hs-head"><div class="n">MATERIAL</div><h3>四种材料撑起整个界面</h3></div>
+    <div class="hs-track">
+      <div class="hs-item">
+        <figure><img src="img/P3-06.webp" alt="浅橡木" loading="lazy"><figcaption><b>浅橡木饰面</b>　折面墙主材</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/P3-07.webp" alt="暖灰微水泥" loading="lazy"><figcaption><b>暖灰微水泥</b>　地面通铺</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/P3-08.webp" alt="拉丝铝" loading="lazy"><figcaption><b>拉丝铝</b>　展架与灯槽</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/P3-09.webp" alt="暖白乳胶漆" loading="lazy"><figcaption><b>暖白乳胶漆</b>　天花与侧墙</figcaption></figure>
+      </div>
+    </div>
   </div>
-
-  <div class="block">
+</section>  <div class="block">
     <div class="block-h rv"><span class="n">03</span><h3>成果</h3><span class="line"></span></div>
   </div>
 
-  <figure class="figure full rv">
-    <div class="px"><img src="img/P4-03.webp" alt="主展区效果" data-speed="0.05"></div>
-    <figcaption><b>主展区</b>　折面墙在 60° 折角处形成连续展面，灯槽藏在折缝里，见光不见灯</figcaption>
-  </figure>
+  <div class="block-h rv" style="margin-bottom:16px"><span class="n">对比</span><h3>同一个位置，拖一下</h3><span class="line"></span></div>
+
+  <div class="cmp rv" id="cmp1">
+    <img class="before" src="img/P2-07.webp" alt="改造前的走廊">
+    <div class="after-wrap"><img class="after" src="img/P4-03.webp" alt="改造后的展厅"></div>
+    <div class="bar"></div>
+    <div class="knob">‹ ›</div>
+    <div class="tag l">改造前</div>
+    <div class="tag r">改造后</div>
+  </div>
+  <p class="rv" style="font-size:11px;letter-spacing:.2em;color:var(--gray);margin-top:14px">拖动中间的圆点，或点击左右任意一侧　·　折面墙在 60° 折角处形成连续展面，灯槽藏在折缝里，见光不见灯</p>
 
   <div class="g2 full">
     <figure class="figure rv"><img src="img/P4-01.webp" alt="总平面"><figcaption><b>总平面</b>　280 ㎡ 三段式，展线全长 34m</figcaption></figure>
@@ -503,6 +687,14 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
     </div>
   </div>
 
+  <div class="ch-sticky" data-ch="02">
+    <div class="row">
+      <span class="no">02</span>
+      <h3>被丢弃的一天</h3>
+      <span class="cur">A DAY OF BEING DISCARDED</span>
+    </div>
+  </div>
+
   <p class="lede rv">我们每天都在扔东西，<b>却从没见过它们被扔掉之后的样子。</b></p>
 
   <figure class="figure full rv">
@@ -556,17 +748,35 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 
   <div class="block-h rv" style="margin-bottom:14px"><span class="n">材料</span><h3>四样回收物，拼出一个展厅</h3><span class="line"></span></div>
 
-  <div class="g4 full">
-    <figure class="figure rv"><img src="img/Q3-05.webp" alt="瓦楞纸板"><figcaption><b>瓦楞纸板</b>　拱廊主材</figcaption></figure>
-    <figure class="figure rv d1"><img src="img/Q3-06.webp" alt="回收塑料瓶"><figcaption><b>回收塑料瓶</b>　悬吊成光帘</figcaption></figure>
-    <figure class="figure rv d2"><img src="img/Q3-07.webp" alt="旧木托盘"><figcaption><b>旧木托盘</b>　展台与坐凳</figcaption></figure>
-    <figure class="figure rv d3"><img src="img/Q3-08.webp" alt="镀锌铁丝网"><figcaption><b>镀锌铁丝网</b>　悬吊骨架</figcaption></figure>
+  <section class="hs rv" id="hs2">
+  <div class="hs-pin">
+    <div class="hs-head"><div class="n">MATERIAL</div><h3>四样回收物，拼出一个展厅</h3></div>
+    <div class="hs-track">
+      <div class="hs-item">
+        <figure><img src="img/Q3-05.webp" alt="瓦楞纸板" loading="lazy"><figcaption><b>瓦楞纸板</b>　拱廊主材</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/Q3-06.webp" alt="回收塑料瓶" loading="lazy"><figcaption><b>回收塑料瓶</b>　悬吊成光帘</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/Q3-07.webp" alt="旧木托盘" loading="lazy"><figcaption><b>旧木托盘</b>　展台与坐凳</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/Q3-08.webp" alt="镀锌铁丝网" loading="lazy"><figcaption><b>镀锌铁丝网</b>　悬吊骨架</figcaption></figure>
+      </div>
+    </div>
   </div>
+</section>  <div class="block-h rv" style="margin-bottom:16px"><span class="n">对比</span><h3>同一个位置，拖一下</h3><span class="line"></span></div>
 
-  <figure class="figure full rv">
-    <div class="px"><img src="img/Q4-03.webp" alt="拱廊内部" data-speed="0.05"></div>
-    <figcaption><b>拱廊内部</b>　纸板拱沿对角线递升，右侧悬吊的塑料瓶在逆光下形成一道半透明的帘</figcaption>
-  </figure>
+  <div class="cmp rv" id="cmp2">
+    <img class="before" src="img/Q2-06.webp" alt="改造前">
+    <div class="after-wrap"><img class="after" src="img/Q4-03.webp" alt="改造后"></div>
+    <div class="bar"></div>
+    <div class="knob">‹ ›</div>
+    <div class="tag l">改造前</div>
+    <div class="tag r">改造后</div>
+  </div>
+  <p class="rv" style="font-size:11px;letter-spacing:.2em;color:var(--gray);margin-top:14px">拖动中间的圆点，或点击左右任意一侧　·　纸板拱沿对角线递升，右侧悬吊的塑料瓶在逆光下形成半透明的帘</p>
 
   <div class="g2 full">
     <figure class="figure rv"><img src="img/Q4-01.webp" alt="平面布置"><figcaption><b>平面布置</b>　180㎡ 对角布局，9 道拱组成 40m 展线</figcaption></figure>
@@ -619,6 +829,14 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
     </div>
   </div>
 
+  <div class="ch-sticky" data-ch="03">
+    <div class="row">
+      <span class="no">03</span>
+      <h3>之间</h3>
+      <span class="cur">BETWEEN</span>
+    </div>
+  </div>
+
   <p class="lede rv">我们每天看几百段视频，<b>但没有一次真的「走进去」看过。</b></p>
 
   <figure class="figure full rv">
@@ -667,17 +885,35 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 
   <div class="block-h rv" style="margin-bottom:14px"><span class="n">材料</span><h3>三样东西控制光，一样东西挡住光</h3><span class="line"></span></div>
 
-  <div class="g4 full">
-    <figure class="figure rv"><img src="img/R3-05.webp" alt="黑色绒布"><figcaption><b>黑色绒布</b>　吸光遮墙，反射率＜3%</figcaption></figure>
-    <figure class="figure rv d1"><img src="img/R3-06.webp" alt="镜面不锈钢"><figcaption><b>镜面不锈钢</b>　接光条，引向地面</figcaption></figure>
-    <figure class="figure rv d2"><img src="img/R3-07.webp" alt="波纹金属板"><figcaption><b>波纹金属板</b>　把光切成条纹</figcaption></figure>
-    <figure class="figure rv d3"><img src="img/R3-08.webp" alt="聚碳酸酯板"><figcaption><b>聚碳酸酯板</b>　入口挡光，透光不透景</figcaption></figure>
+  <section class="hs rv" id="hs3">
+  <div class="hs-pin">
+    <div class="hs-head"><div class="n">MATERIAL</div><h3>三样东西控制光，一样东西挡住光</h3></div>
+    <div class="hs-track">
+      <div class="hs-item">
+        <figure><img src="img/R3-05.webp" alt="黑色绒布" loading="lazy"><figcaption><b>黑色绒布</b>　吸光遮墙，反射率＜3%</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/R3-06.webp" alt="镜面不锈钢" loading="lazy"><figcaption><b>镜面不锈钢</b>　接光条，引向地面</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/R3-07.webp" alt="波纹金属板" loading="lazy"><figcaption><b>波纹金属板</b>　把光切成条纹</figcaption></figure>
+      </div>
+      <div class="hs-item">
+        <figure><img src="img/R3-08.webp" alt="聚碳酸酯板" loading="lazy"><figcaption><b>聚碳酸酯板</b>　入口挡光，透光不透景</figcaption></figure>
+      </div>
+    </div>
   </div>
+</section>  <div class="block-h rv" style="margin-bottom:16px"><span class="n">对比</span><h3>同一个位置，拖一下</h3><span class="line"></span></div>
 
-  <figure class="figure full rv">
-    <div class="px"><img src="img/R4-03.webp" alt="主投影区" data-speed="0.05"></div>
-    <figcaption><b>主投影区</b>　光从墙面溢到地面形成倒影，两侧绒布把杂光吃到几乎为零，人物因此变成纯黑剪影</figcaption>
-  </figure>
+  <div class="cmp rv" id="cmp3">
+    <img class="before" src="img/R2-06.webp" alt="改造前">
+    <div class="after-wrap"><img class="after" src="img/R4-03.webp" alt="改造后"></div>
+    <div class="bar"></div>
+    <div class="knob">‹ ›</div>
+    <div class="tag l">改造前</div>
+    <div class="tag r">改造后</div>
+  </div>
+  <p class="rv" style="font-size:11px;letter-spacing:.2em;color:var(--gray);margin-top:14px">拖动中间的圆点，或点击左右任意一侧　·　光从墙面溢到地面形成倒影，两侧绒布把杂光吃到几乎为零，人物变成纯黑剪影</p>
 
   <div class="g2 full">
     <figure class="figure rv"><img src="img/R4-01.webp" alt="平面布置"><figcaption><b>平面布置</b>　120㎡ 三段式：入口缓冲—斜屏区—主投影区</figcaption></figure>
@@ -992,6 +1228,121 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
     }, {threshold:.15});
     document.querySelectorAll(".ch-head, .block-h").forEach(function(el){ io4.observe(el); });
   }
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var isTouch = matchMedia("(hover: none)").matches;
+
+  /* ========== 1. 前后对比滑块 ========== */
+  document.querySelectorAll(".cmp").forEach(function(box){
+    var wrap = box.querySelector(".after-wrap");
+    var bar  = box.querySelector(".bar");
+    var knob = box.querySelector(".knob");
+    var dragging = false;
+
+    function setPos(pct){
+      pct = Math.max(2, Math.min(98, pct));
+      wrap.style.clipPath = "inset(0 0 0 " + pct + "%)";
+      bar.style.left = pct + "%";
+      knob.style.left = pct + "%";
+    }
+    function fromEvent(e){
+      var r = box.getBoundingClientRect();
+      var x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+      setPos(x / r.width * 100);
+    }
+
+    box.addEventListener("mousedown", function(e){ dragging = true; fromEvent(e); e.preventDefault(); });
+    window.addEventListener("mousemove", function(e){ if (dragging) fromEvent(e); });
+    window.addEventListener("mouseup", function(){ dragging = false; });
+
+    box.addEventListener("touchstart", function(e){ dragging = true; fromEvent(e); }, {passive:true});
+    box.addEventListener("touchmove", function(e){ if (dragging) fromEvent(e); }, {passive:true});
+    box.addEventListener("touchend", function(){ dragging = false; });
+
+    /* 未拖动时缓慢来回演示一次 */
+    if (!reduce && !isTouch){
+      var t0 = null, played = false;
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if (en.isIntersecting && !played){
+            played = true;
+            function anim(ts){
+              if (dragging) return;
+              if (!t0) t0 = ts;
+              var p = Math.min((ts - t0) / 2200, 1);
+              var eased = p < .5 ? p*2 : (1-p)*2;      /* 0→1→0 */
+              setPos(50 + eased * 32);
+              if (p < 1) requestAnimationFrame(anim);
+              else setPos(50);
+            }
+            requestAnimationFrame(anim);
+            io.unobserve(box);
+          }
+        });
+      }, {threshold:.4});
+      io.observe(box);
+    }
+  });
+
+  /* ========== 3. 吸顶条激活状态 ========== */
+  var sticks = [].slice.call(document.querySelectorAll(".ch-sticky"));
+  if (sticks.length){
+    var tick2 = false;
+    function stickScroll(){
+      sticks.forEach(function(s){
+        var r = s.getBoundingClientRect();
+        /* 吸到顶部时加 on */
+        s.classList.toggle("on", r.top <= 1 && r.bottom > 0);
+      });
+      tick2 = false;
+    }
+    addEventListener("scroll", function(){
+      if (!tick2){ requestAnimationFrame(stickScroll); tick2 = true; }
+    }, {passive:true});
+    stickScroll();
+  }
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var isTouch = matchMedia("(hover: none)").matches;
+  if (reduce || isTouch) return;
+
+  /* 材质区横向视差：滚动时四张图朝不同方向轻微位移，制造"横移感" */
+  var groups = [].slice.call(document.querySelectorAll(".hs"));
+  if (!groups.length) return;
+
+  var ticking = false;
+  function update(){
+    var vh = innerHeight;
+    groups.forEach(function(g){
+      var r = g.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) return;
+      var imgs = g.querySelectorAll(".hs-item img");
+      /* -1 .. 1 之间：图组在视口中的相对位置 */
+      var p = (r.top + r.height/2 - vh/2) / (vh/2 + r.height/2);
+      p = Math.max(-1, Math.min(1, p));
+      for (var i = 0; i < imgs.length; i++){
+        var dir = (i % 2 === 0) ? 1 : -1;
+        var x = p * dir * 26;              /* 每张最多位移 26px */
+        imgs[i].style.transform = "translate3d(" + x.toFixed(1) + "px,0,0) scale(1.08)";
+      }
+    });
+    ticking = false;
+  }
+  addEventListener("scroll", function(){
+    if (!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, {passive:true});
+  addEventListener("resize", update);
+  update();
 })();
 </script>
 </body>
