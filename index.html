@@ -249,11 +249,7 @@ footer{max-width:1280px;margin:0 auto;
   .lb .prev::after{content:"\2039";font-size:28px;letter-spacing:0}
   .lb .next::after{content:"\203A";font-size:28px;letter-spacing:0}
 }
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  body.anim .rv{opacity:1;transform:none;transition:none}
-  .hero .scroll-hint i::after{animation:none}
-}
+
 
 
 /* ================= 对比滑块 ================= */
@@ -985,7 +981,7 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 <script>
 (function(){
   "use strict";
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var reduce = /noanim/.test(location.search);   /* 只认手动参数，不因系统"减少动画"而关闭 */
   var isTouch = matchMedia("(hover: none)").matches;
   var body = document.body;
 
@@ -1073,7 +1069,7 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 <script>
 (function(){
   "use strict";
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var reduce = /noanim/.test(location.search);   /* 只认手动参数，不因系统"减少动画"而关闭 */
 
   /* ---- 图片视差（滚动时按 data-speed 轻微位移） ---- */
   var pxImgs = [].slice.call(document.querySelectorAll(".px img[data-speed]"));
@@ -1151,7 +1147,7 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 <script>
 (function(){
   "use strict";
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var reduce = /noanim/.test(location.search);   /* 只认手动参数，不因系统"减少动画"而关闭 */
   var isTouch = matchMedia("(hover: none)").matches;
   var body = document.body;
 
@@ -1234,7 +1230,7 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 <script>
 (function(){
   "use strict";
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var reduce = /noanim/.test(location.search);   /* 只认手动参数，不因系统"减少动画"而关闭 */
   var isTouch = matchMedia("(hover: none)").matches;
 
   /* ========== 1. 前后对比滑块 ========== */
@@ -1312,7 +1308,7 @@ body.anim .in .split > i,body.anim h2.in .split > i{transform:translateY(0)}
 <script>
 (function(){
   "use strict";
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || /noanim/.test(location.search);
+  var reduce = /noanim/.test(location.search);   /* 只认手动参数，不因系统"减少动画"而关闭 */
   var isTouch = matchMedia("(hover: none)").matches;
   if (reduce || isTouch) return;
 
